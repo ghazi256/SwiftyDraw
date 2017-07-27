@@ -91,6 +91,11 @@ open class SwiftyDrawView: UIView {
     /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
     public var drawingEnabled         : Bool      = true
     
+    /// Sets whether touch gestures should be registered as drawing strokes on the current canvas
+    public var isPathArrayEmpty         : Bool  {
+        return pathArray.isEmpty
+    }
+    
     /// Public SwiftyDrawView delegate
     public var delegate               : SwiftyDrawViewDelegate?
     
@@ -260,7 +265,3 @@ open class SwiftyDrawView: UIView {
         return subpath
     }
 }
-
-
-
-    
