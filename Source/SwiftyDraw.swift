@@ -220,6 +220,33 @@ open class SwiftyDrawView: UIView {
         setNeedsDisplay()
     }
     
+    public func getCurrentImage() -> UIImage?
+    {
+        let imageWidth: CGFloat = frame.size.width
+        let imageHeight: CGFloat  = frame.size.height
+        
+        // Make a graphics context
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: imageWidth, height: imageHeight), false, 0.0)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        context.setLineCap(.round)
+        
+        for line in pathArray {
+            context.setLineWidth(line.width)
+            context.setAlpha(line.opacity)
+            context.setStrokeColor(line.color.cgColor)
+            context.addPath(line.path)
+            context.beginTransparencyLayer(auxiliaryInfo: nil)
+            context.strokePath()
+            context.endTransparencyLayer()
+        }
+        let image = UIGraphicsGetImageFromCurrentImageContext()        
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
 /********************************** Private Functions **********************************/
     
     private func setTouchPoints(_ touch: UITouch,view: UIView) {
@@ -265,3 +292,7 @@ open class SwiftyDrawView: UIView {
         return subpath
     }
 }
+
+
+
+    
